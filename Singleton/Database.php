@@ -18,7 +18,7 @@ class Database
     /*构造方法私有化*/
     private function __construct()
     {
-        print_r('实例化成功'.$this->ins_time.'次'."\r\n");
+        print_r('实例化成功' . $this->ins_time . '次' . "\r\n");
     }
 
     public static function getInstance()

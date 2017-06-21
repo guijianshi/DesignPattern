@@ -13,7 +13,7 @@ class Factory
 {
     static function createDatabase($data_type)
     {
-        switch ($data_type){
+        switch ($data_type) {
             case 'MySQL':
                 $db = new Mysql();
                 break;

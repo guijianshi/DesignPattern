@@ -12,6 +12,7 @@ namespace Register;
 class Register
 {
     protected static $objects = [];
+
     public static function set($alias, $object)
     {
         self::$objects[$alias] = $object;

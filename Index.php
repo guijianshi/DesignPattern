@@ -5,7 +5,7 @@
  * Date: 2017/6/21
  * Time: 8:59
  */
-define('DIR',__DIR__);
+define('DIR', __DIR__);
 include_once DIR . '/Loader.php';
 spl_autoload_register('\\Loader\\Loader::autoload');
 
@@ -36,8 +36,8 @@ function singleton()
  */
 function register()
 {
-    \Register\Register::set('db',\Factory\Factory::createDatabase('MySQL'));
-    $db =  \Register\Register::get('db');
+    \Register\Register::set('db', \Factory\Factory::createDatabase('MySQL'));
+    $db = \Register\Register::get('db');
     $db->connect();
 }
 
@@ -48,6 +48,7 @@ function adapter()
     $db->query('show databases');
     $db->close();
 }
+
 /**
  * 策略模式
  */
@@ -57,8 +58,8 @@ function strategy()
     $lessions[] = new \Strategy\Lecture(4, new \Strategy\FixedCostStrategy());
 
     foreach ($lessions as $lession) {
-        print 'lesson cost: '.$lession->cost();
-        print 'charge type: '.$lession->chargeType()."\r\n";
+        print 'lesson cost: ' . $lession->cost();
+        print 'charge type: ' . $lession->chargeType() . "\r\n";
     }
 }
 

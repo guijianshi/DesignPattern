@@ -13,6 +13,6 @@ class Loader
 {
     static function autoload($class)
     {
-        require DIR.'/'.str_replace('\\','/',$class).'.php';
+        require DIR . '/' . str_replace('\\', '/', $class) . '.php';
     }
 }

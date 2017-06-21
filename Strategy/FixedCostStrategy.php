@@ -15,6 +15,7 @@ class FixedCostStrategy extends CostStrategy
     {
         return 30;
     }
+
     function chargeType()
     {
         return 'fixed rate';

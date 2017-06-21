@@ -12,15 +12,18 @@ namespace Adapter;
 class MySQLiAdapter implements Database
 {
     protected $conn;
+
     public function connect($host, $user, $password, $dbname)
     {
         $this->conn = mysqli_connect($host, $user, $password, $dbname);
         return $this->conn;
     }
+
     public function query($sql)
     {
         return mysqli_query($this->conn, $sql);
     }
+
     public function close()
     {
         return mysqli_close($this->conn);
