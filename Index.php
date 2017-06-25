@@ -9,6 +9,8 @@ define('DIR', __DIR__);
 include_once DIR . '/Loader.php';
 spl_autoload_register('\\Loader\\Loader::autoload');
 
+
+observer();
 /**
  * 工厂模式
  */
@@ -61,6 +63,15 @@ function strategy()
         print 'lesson cost: ' . $lession->cost();
         print 'charge type: ' . $lession->chargeType() . "\r\n";
     }
+}
+
+function observer()
+{
+    $event = new \Observer\Event();
+    $event->addObserver(new \Observer\Observer1());
+    $event->addObserver(new \Observer\Observer2());
+    $event->trigger();
+
 }
 
 
