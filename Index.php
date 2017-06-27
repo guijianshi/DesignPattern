@@ -9,8 +9,7 @@ define('DIR', __DIR__);
 include_once DIR . '/Loader.php';
 spl_autoload_register('\\Loader\\Loader::autoload');
 
-
-observer();
+prototype();
 /**
  * 工厂模式
  */
@@ -72,6 +71,14 @@ function observer()
     $event->addObserver(new \Observer\Observer2());
     $event->trigger();
 
+}
+
+function prototype()
+{
+    $canvas1 = new \Prototype\Canvas();
+    $canvas1->init();
+    $canvas1->rect(5, 6, 11, 12);
+    $canvas1->draw();
 }
 
 
