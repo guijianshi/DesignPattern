@@ -19,45 +19,48 @@ class User
 
     private $password;
 
-    public $mobile;
+    public $phone;
 
-    private $db;
+    private $_db;
 
-    public function __construct($id)
+    public function __construct($id = 0)
     {
-        $this->db = new MySQLiAdapter();
-        $this->db->connect('localhost','root','123','test');
-        $res = $this->db->query('SELECT * FROM user WHERE id = '.$id);
+        $this->_db = new MySQLiAdapter();
+        $this->_db->connect('localhost', 'root', '123', 'blog');
+        $res = $this->_db->query('SELECT * FROM users WHERE id = ' . $id . ' LIMIT 1');
         $data = $res->fetch_assoc();
         $this->id = $data['id'];
         $this->username = $data['username'];
         $this->password = $data['password'];
-        $this->mobile = $data['mobile'];
+        $this->phone = $data['phone'];
 
     }
 
     function __destruct()
     {
-        $this->db->query("UPDATA user SET username = '{$this->username}', password = '{$this->password}',
-        mobile = '{$this->mobile}'
+
+        $this->_db->query("UPDATE users SET username = '{$this->username}', password = '{$this->password}',
+            phone = '{$this->phone}' WHERE id = {$this->id} LIMIT 1
         ");
+
+
     }
 
 
     /**
      * @return mixed
      */
-    public function getMobile()
+    public function getphone()
     {
-        return $this->mobile;
+        return $this->phone;
     }
 
     /**
-     * @param mixed $mobile
+     * @param mixed $phone
      */
-    public function setMobile($mobile)
+    public function setphone($phone)
     {
-        $this->mobile = $mobile;
+        $this->phone = $phone;
     }
 
     /**

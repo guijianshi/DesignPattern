@@ -6,12 +6,14 @@
  * Time: 22:46
  */
 
-namespace Prototype;
+namespace Decorator;
 
 
 class Canvas
 {
-    public $data = [];
+    protected $data = [];
+
+    protected $decorators = [];
 
     public function init($width = 1000, $height = 500)
     {
@@ -24,14 +26,36 @@ class Canvas
         $this->data = $data;
     }
 
+    public function addDecorator(DrawDecorator $decorator)
+    {
+        $this->decorators[] = $decorator;
+    }
+
+    public function beforeDraw()
+    {
+        foreach ($this->decorators as $decorator) {
+            $decorator->beforeDraw();
+        }
+    }
+
+    public function afterDraw()
+    {
+        $decorators = array_reverse($this->decorators);
+        foreach ($decorators as $decorator) {
+            $decorator->afterDraw();
+        }
+    }
+
     public function draw()
     {
+        $this->beforeDraw();
         foreach ($this->data as $line) {
             foreach ($line as $char) {
                 echo $char;
             }
             echo '<br/>';
         }
+        $this->afterDraw();
     }
 
     public function rect($a1, $a2, $b1, $b2)

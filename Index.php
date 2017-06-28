@@ -9,7 +9,7 @@ define('DIR', __DIR__);
 include_once DIR . '/Loader.php';
 spl_autoload_register('\\Loader\\Loader::autoload');
 
-prototype();
+iterator();
 /**
  * 工厂模式
  */
@@ -64,6 +64,16 @@ function strategy()
     }
 }
 
+
+function orm()
+{
+    $user = new \ORM\User(1);
+    $user->setphone(87878);
+}
+
+/**
+ * 观察者模式
+ */
 function observer()
 {
     $event = new \Observer\Event();
@@ -73,12 +83,77 @@ function observer()
 
 }
 
+/**
+ * 不使用原型模式耗费时间: 0.062000036239624
+ * 使用原型模式耗费时间: 0.038000106811523
+ * 原型模式
+ */
 function prototype()
 {
-    $canvas1 = new \Prototype\Canvas();
+    /*不使用原型模式*/
+    $time = new \Util\Time();
+    $canvas1 = new Prototype\Canvas();
     $canvas1->init();
-    $canvas1->rect(5, 6, 11, 12);
+    $canvas1->rect(20, 60, 90, 120);
+//    $canvas1->draw();
+    $canvas2 = new Prototype\Canvas();
+    $canvas2->init();
+    $canvas2->rect(200, 600, 90, 120);
+//    $canvas2->draw();
+    echo '不使用原型模式耗费时间: ';
+    $time->cost();
+
+    /*使用原型模式*/
+
+    /*创建原型*/
+    $canvas_prototype = new \Prototype\Canvas();
+    $canvas_prototype->init();
+
+    /*复制原型*/
+    $canvas1 = clone $canvas_prototype;
+    $canvas1->rect(20, 60, 90, 120);
+//    $canvas1->draw();
+    $canvas2 = clone $canvas_prototype;
+    $canvas2->rect(200, 600, 90, 120);
+//    $canvas2->draw();
+    echo '使用原型模式耗费时间: ';
+    $time->cost();
+}
+
+/**
+ * 装饰器模式
+ */
+function decorator()
+{
+    $time = new \Util\Time();
+    $canvas1 = new Decorator\Canvas();
+    $canvas1->init(20, 20);
+    $canvas1->rect(5, 16, 9, 12);
+    $canvas1->addDecorator(new Decorator\ColorDecorator());
+    $canvas1->addDecorator(new Decorator\FontSizeDecorator(50));
     $canvas1->draw();
+    $time->cost();
+}
+
+/**
+ * 迭代器
+ */
+function iterator()
+{
+    $users = new Iterator\UserIterator();
+    foreach ($users as $user) {
+        var_dump($user->getId());
+    }
+}
+
+/**
+ * 代理模式
+ */
+function proxy()
+{
+    $user = new \Proxy\UserProxy();
+    $user->getUserName(1);
+    $user->setUserName(1, 'test');
 }
 
 

@@ -9,13 +9,22 @@
 namespace Factory;
 
 
+use Adapter\MySQLiAdapter;
+use ORM\User;
+use Register\Register;
+
 class Factory
 {
-    static function createDatabase($data_type)
+    /**
+     * @param string $data_type
+     * @return MySQLiAdapter|PostgreSQL
+     * @throws \Exception
+     */
+    public static function createDatabase($data_type = 'MySQL')
     {
         switch ($data_type) {
             case 'MySQL':
-                $db = new Mysql();
+                $db = new MySQLiAdapter();
                 break;
             case 'PostGreSQL':
                 $db = new PostgreSQL();
@@ -24,6 +33,20 @@ class Factory
                 throw new \Exception('数据库类型不支持');
         }
         return $db;
+    }
 
+    /**
+     * @param $id
+     * @return mixed|User
+     */
+    public static function getUser($id)
+    {
+        $key = 'user_' . $id;
+        $user = Register::get($key);
+        if (!$user) {
+            $user = new User($id);
+            Register::set($key, $user);
+        }
+        return $user;
     }
 }
