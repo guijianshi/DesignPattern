@@ -9,6 +9,7 @@ define('DIR', __DIR__);
 include_once DIR . '/Loader.php';
 spl_autoload_register('\\Loader\\Loader::autoload');
 
-$config = new \Demo\Config\Config(__DIR__ . '/Demo/Config');
-var_dump($config['controller']);
+//$config = new \Demo\Config\Config(__DIR__ . '/Demo/Config');
+//var_dump($config['controller']);
+\Util\Helper::observer();
 
