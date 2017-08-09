@@ -10,4 +10,6 @@ define('DIR', __DIR__);
 include_once DIR . '/Loader.php';
 spl_autoload_register('\\Loader\\Loader::autoload');
 
-Test::SingleFactoryTest();
+//Test::SingleFactoryTest();
+echo Test::SingleFactoryTest();
+Test::DecoratorTest();
