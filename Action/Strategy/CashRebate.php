@@ -11,21 +11,21 @@ namespace Action\Strategy;
 
 class CashRebate extends CashSuper
 {
-    private $money_rebate;
+    private $moneyRebate;
 
     /**
      * CashRebate constructor.
      * @param $money_rebate
      */
-    public function __construct(string $money_rebate)
+    public function __construct(string $moneyRebate)
     {
-        $this->money_rebate = (float) $money_rebate;
+        $this->moneyRebate = (float) $moneyRebate;
     }
 
 
     public function acceptionCash(float $money)
     {
-        return $money * $this->money_rebate;
+        return $money * $this->moneyRebate;
     }
 
 }

@@ -11,26 +11,26 @@ namespace Action\Strategy;
 
 class CashReturn extends CashSuper
 {
-    private $money_condition;
+    private $moneyCondition;
 
-    private $money_return;
+    private $moneyReturn;
 
     /**
      * CashReturn constructor.
      * @param $money_condition
      * @param $money_return
      */
-    public function __construct(string $money_condition, string $money_return)
+    public function __construct(string $moneyCondition, string $moneyReturn)
     {
-        $this->money_condition = (float) $money_condition;
-        $this->money_return = (float) $money_return;
+        $this->moneyCondition = (float) $moneyCondition;
+        $this->moneyReturn = (float) $moneyReturn;
     }
 
 
     public function acceptionCash(float $money)
     {
 
-        return ($money -  floor($money / $this->money_condition) * $this->money_return);
+        return ($money -  floor($money / $this->moneyCondition) * $this->moneyReturn);
     }
 
 }

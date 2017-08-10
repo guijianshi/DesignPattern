@@ -10,6 +10,7 @@ use Action\Strategy\CashContext;
 use Action\Decorator\ConcreteComponent;
 use Action\Decorator\ConcreteDecoratorA;
 use Action\Decorator\ConcreteDecoratorB;
+use Action\Decorator\Demo\Person;
 class Test
 {
     public static function SingleFactoryTest()
@@ -27,13 +28,16 @@ class Test
      * @param float $money
      * @return float
      */
-    public static function StrategyTest(float $money = 300)
+    public static function strategyTest(float $money = 300)
     {
-        $cash_super = new CashContext('满300返100');
-        return $cash_super->getResult($money);
+        $cashSuper = new CashContext('满300返100');
+        return $cashSuper->getResult($money);
     }
 
-    public static function DecoratorTest()
+    /**
+     * 装饰器模式测试
+     */
+    public static function decoratorTest()
     {
         $c = new ConcreteComponent();
         $d1 = new ConcreteDecoratorA();
@@ -41,5 +45,36 @@ class Test
         $d1->setComponent($c);
         $d2->setComponent($d1);
         $d2->Operation();
+    }
+
+    /**
+     * 装饰器模式测试
+     */
+    public static function decoratorDemoTest()
+    {
+        $person = new Person('鬼剑士');
+        $whiteCap = new \Action\Decorator\Demo\WhiteCap();
+        $tShrit = new \Action\Decorator\Demo\TShirts();
+        $bigTrouser = new \Action\Decorator\Demo\BigTrouser();
+        $sneaker = new \Action\Decorator\Demo\Sneaker();
+
+        /*后进先出*/
+        $sneaker->decorator($person);
+        $bigTrouser->decorator($sneaker);
+        $tShrit->decorator($bigTrouser);
+        $whiteCap->decorator($tShrit);
+        $whiteCap->show();
+    }
+
+    /**
+     * 代理模式测试
+     */
+    public static function proxyTest()
+    {
+        $girl = new \Structure\Proxy\SchoolGirl('妞妞');
+        $proxy = new \Structure\Proxy\Proxy($girl);
+        $proxy->giveDolls();
+        $proxy->giveFlowers();
+        $proxy->giveChocolate();
     }
 }
