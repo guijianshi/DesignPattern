@@ -77,4 +77,19 @@ class Test
         $proxy->giveFlowers();
         $proxy->giveChocolate();
     }
+
+    public static function factoryTest()
+    {
+        /*生产法拉利*/
+        $ferrariFactory = new \Create\Factory\FerrariFactory();
+        $ferrariA = $ferrariFactory->createCar();
+        $ferrariA->run();
+        $ferrariB = $ferrariFactory->createCar();
+        $ferrariB->run();
+
+        /*生产大众*/
+        $volkswagenFactory = new \Create\Factory\VolkswagenFactory();
+        $volkswagen = $volkswagenFactory->createCar();
+        $volkswagen->run();
+    }
 }

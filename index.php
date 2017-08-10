@@ -11,5 +11,4 @@ include_once DIR . '/Loader.php';
 spl_autoload_register('\\Loader\\Loader::autoload');
 
 //Test::SingleFactoryTest();
-echo Test::SingleFactoryTest();
-Test::DecoratorTest();
+Test::factoryTest();
