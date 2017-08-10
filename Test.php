@@ -92,4 +92,25 @@ class Test
         $volkswagen = $volkswagenFactory->createCar();
         $volkswagen->run();
     }
+
+    public static function prototypeTest()
+    {
+        $a = new \Create\Prototype\Resume('鬼剑士');
+        $a->setPersonalInfo('男', '12');
+        $a->setWorkExperience('2016-2016', '浙江奥翔');
+        $b = $a->cloneSelf();
+        $b->setPersonalInfo('男', '12');
+        $b->setWorkExperience('2016-2017', '杭州瑞普');
+        $a->dispaly();
+        $b->dispaly();
+
+        $c = new \Create\Prototype\Demo\Resume('鬼剑士');
+        $c->setPersonalInfo('男', '12');
+        $c->setWorkExperience('2016-2016', '浙江奥翔');
+        $d = $c->cloneSelf();
+        $d->setPersonalInfo('男', '16');
+        $d->setWorkExperience('2016-2017', '杭州瑞普');
+        $c->display();
+        $d->display();
+    }
 }
