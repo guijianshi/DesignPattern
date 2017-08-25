@@ -11,6 +11,7 @@ use Action\Decorator\ConcreteComponent;
 use Action\Decorator\ConcreteDecoratorA;
 use Action\Decorator\ConcreteDecoratorB;
 use Action\Decorator\Demo\Person;
+use \Structure\Composite\Demo\{ConcreteCompany,HRDepartment, FinanceDepartment };
 class Test
 {
     public static function SingleFactoryTest()
@@ -112,5 +113,221 @@ class Test
         $d->setWorkExperience('2016-2017', '杭州瑞普');
         $c->display();
         $d->display();
+    }
+
+    public static function templateTest()
+    {
+        $a = new \Structure\Template\Demo\TestPaperA();
+        $a->testQuestion1();
+
+        $b = new \Structure\Template\Demo\TestPaperB();
+        $b->testQuestion1();
+
+        $c = new \Structure\Template\ConcreteClassA();
+        $c->templateMethod();
+
+        $d = new \Structure\Template\ConcreteClassB();
+        $d->templateMethod();
+    }
+
+    public static function facadeTest()
+    {
+        $fund = new \Structure\Facade\Fund();
+        $fund->buyFund();
+        $fund->sellFund();
+    }
+
+    public static function builderTest()
+    {
+        $pbThin = new \Create\Builder\PersonDirector(new \Create\Builder\PersonThinBuilder());
+        $pbThin->createPerson();
+
+        $pbfat = new \Create\Builder\PersonDirector(new \Create\Builder\PersonFatBuilder());
+        $pbfat->createPerson();
+    }
+
+    public static function observerTest()
+    {
+        $user = new \Action\Observer\Demo\User();
+        $user->attach(new \Action\Observer\Demo\UserObserver());
+        $user->a = 1;
+        $user->a = 3;
+    }
+
+    public static function observer2Test()
+    {
+        $boss = new \Action\Observer\Boss();
+        $colleague1 = new \Action\Observer\StockObserver($boss);
+        $colleague2 = new \Action\Observer\NBAObserver($boss);
+        $boss->notify();
+    }
+
+    public static function abstractFactoryTest()
+    {
+        $factory = new \Create\AbstractFactroy\MySQLUserFactory();
+        $data = $factory->createUser();
+
+        $id = $factory->createDepartment();
+        $id->insert(1);
+        $id->find(1);
+    }
+
+    public static function stateTest()
+    {
+        $c = new \Action\State\Context(new \Action\State\ConcreteStateA());
+        $c->Request();
+        $c->Request();
+        $c->Request();
+        $c->Request();
+        $c->Request();
+    }
+
+    public static function stateDemoTest()
+    {
+        $work = new \Action\State\Demo\Work();
+        $work->setHour(10);
+        $work->writeProgram();
+        $work->setHour(12.5);
+        $work->writeProgram();
+        $work->setHour(14);
+        $work->writeProgram();
+    }
+
+    public static function adapterTest()
+    {
+        $playA = new \Structure\Adapter\Forwards('詹姆斯');
+        $playA->attack();
+        $playB = new \Structure\Adapter\Translator('易建联');
+        $playB->attack();
+        $playC = new \Structure\Adapter\Guards('麦迪');
+        $playC->attack();
+    }
+
+    public static function mementoTest()
+    {
+        $origin = new \Action\Memento\Originator();
+        $origin->setState('On');
+        $origin->show();
+        $care = new \Action\Memento\Caretaker();
+        $care->setMemento($origin->createMemento());
+
+        $origin->setState('Off');
+        $origin->show();
+        $origin->setMemento($care->getMemento());
+        $origin->show();
+    }
+
+    public static function compositeTest()
+    {
+        $root = new \Structure\Composite\Composite('root');
+        $root->add(new \Structure\Composite\Leaf('Leaf A'));
+        $root->add(new \Structure\Composite\Leaf('Leaf B'));
+
+        $l = new \Structure\Composite\Composite('root_l');
+        $l->add(new \Structure\Composite\Leaf('L A'));
+        $l->add(new \Structure\Composite\Leaf('L B'));
+
+        $root->add($l);
+
+        $r = new \Structure\Composite\Composite('root_r');
+        $r->add(new \Structure\Composite\Leaf('r A'));
+        $r->add(new \Structure\Composite\Leaf('r B'));
+
+        $root->add($r);
+
+        $ll = new \Structure\Composite\Composite('root_ll');
+        $ll->add(new \Structure\Composite\Leaf('LL A'));
+        $ll->add(new \Structure\Composite\Leaf('LL B'));
+
+        $l->add($ll);
+        $l->remove($ll);
+
+        $root->display(1);
+    }
+
+    public static function compositeDemoTest()
+    {
+        $root = new ConcreteCompany('总公司');
+        $root->add(new HRDepartment('总公司的人事部门'));
+        $root->add(new FinanceDepartment('总公司的财务部门'));
+
+        $comp1 = new ConcreteCompany('北方分公司');
+        $comp1->add(new HRDepartment('北方分公司人事部门'));
+        $comp1->add(new FinanceDepartment('北方分公司财务部门'));
+        $root->add($comp1);
+
+        $comp1_1 = new ConcreteCompany('帝都办事处');
+        $comp1_1->add(new HRDepartment('帝都办事处人事部门'));
+        $comp1_1->add(new FinanceDepartment('帝都办事处财务部门'));
+        $comp1->add($comp1_1);
+
+        $comp1_2 = new ConcreteCompany('天津办事处');
+        $comp1_2->add(new HRDepartment('天津办事处人事部门'));
+        $comp1_2->add(new FinanceDepartment('天津办事处财务部门'));
+        $comp1->add($comp1_2);
+
+        $comp2 = new ConcreteCompany('南方分公司');
+        $comp2->add(new HRDepartment('南方分公司人事部门'));
+        $comp2->add(new FinanceDepartment('南方分公司财务部门'));
+        $root->add($comp2);
+
+        echo '公司架构图<br/>';
+        $root->display(1);
+
+        echo '职责<br/>';
+        $root->lineOfDuty();
+    }
+
+    public static function bridgeTest()
+    {
+        $ab = new \Structure\Bridge\Abstraction();
+        $ab->setImplementor(new \Structure\Bridge\ConcreteImplementorA());
+        $ab->operation();
+
+        $ab->setImplementor(new \Structure\Bridge\ConcreteImplementorB());
+        $ab->operation();
+    }
+
+    /**
+     * 测试桥连模式Demo
+     */
+    public static function bridgeDemoTest()
+    {
+        $mi = new \Structure\Bridge\Demo\HandsetBrandMi();
+        $mi->setSoft(new \Structure\Bridge\Demo\HandsetGame());
+        $mi->run();
+
+        $nokia = new \Structure\Bridge\Demo\HandsetBrandNokia();
+        $nokia->setSoft(new \Structure\Bridge\Demo\HandsetAdressList());
+        $nokia->run();
+    }
+
+    public static function commondTest()
+    {
+        $receiver = new \Action\Commond\Receiver();
+        $commond = new \Action\Commond\ConcreteCommond($receiver);
+        $invoker = new \Action\Commond\Invoker();
+
+        $invoker->setCommond($commond);
+        $invoker->executeCommond();
+    }
+
+    public static function commondDemoTest()
+    {
+        $cook = new \Action\Commond\Demo\Barbecuer();
+        $bakeMuttonCommond1 = new \Action\Commond\Demo\BakeMuttonCommond($cook);
+        $bakeMuttonCommond2 = new \Action\Commond\Demo\BakeMuttonCommond($cook);
+        $bakeChickenWingCommond1 = new \Action\Commond\Demo\BakeChickenWingCommond($cook);
+
+        $waiter = new \Action\Commond\Demo\Waiter();
+        $waiter->setOrder($bakeMuttonCommond1);
+        $waiter->setOrder($bakeMuttonCommond2);
+        $waiter->setOrder($bakeChickenWingCommond1);
+        $waiter->notify();
+    }
+
+    public static function test2()
+    {
+        echo 'hello';
     }
 }
