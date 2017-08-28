@@ -326,8 +326,38 @@ class Test
         $waiter->notify();
     }
 
-    public static function test2()
+    public static function ChainOfResponsibilitiesTest()
     {
-        echo 'hello';
+        $hander1 = new \Action\ChainOfResponsibilities\ConcreteHandler1();
+        $hander2 = new \Action\ChainOfResponsibilities\ConcreteHandler2();
+        $hander3 = new \Action\ChainOfResponsibilities\ConcreteHandler3();
+        $hander1->setSuccessor($hander2);
+        $hander2->setSuccessor($hander3);
+        $requests = [2,8,10,18,20,25,29,31];
+        foreach ($requests as $v) {
+            $hander1->handleRequest($v);
+        }
     }
+
+    public static function ChainOfResponsibilitiesDemoTest()
+    {
+        $xiao = new \Action\ChainOfResponsibilities\Demo\CommonManager('肖肖');
+        $wang = new \Action\ChainOfResponsibilities\Demo\Majordomo('老王');
+        $lou = new \Action\ChainOfResponsibilities\Demo\GeneralManager('楼总');
+        $xiao->setSuperior($wang);
+        $wang->setSuperior($lou);
+
+        $reuqest1 = new \Action\ChainOfResponsibilities\Demo\Request();
+        $reuqest1->setRequestType('请假');
+        $reuqest1->setRequestContent('小林请假');
+        $reuqest1->setNumber(2);
+        $xiao->requestApplications($reuqest1);
+
+        $reuqest2 = new \Action\ChainOfResponsibilities\Demo\Request();
+        $reuqest2->setRequestType('加薪');
+        $reuqest2->setRequestContent('小胡申请加薪');
+        $reuqest2->setNumber(800);
+        $xiao->requestApplications($reuqest2);
+    }
+
 }

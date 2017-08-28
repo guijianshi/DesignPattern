@@ -28,4 +28,5 @@ spl_autoload_register('\\Loader\\Loader::autoload');
 //Test::bridgeDemoTest();
 //Test::commondTest();
 //Test::commondDemoTest();
-Test::Test2();
+//Test::ChainOfResponsibilitiesTest();
+Test::ChainOfResponsibilitiesDemoTest();
