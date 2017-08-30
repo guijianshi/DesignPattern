@@ -29,4 +29,7 @@ spl_autoload_register('\\Loader\\Loader::autoload');
 //Test::commondTest();
 //Test::commondDemoTest();
 //Test::ChainOfResponsibilitiesTest();
-Test::ChainOfResponsibilitiesDemoTest();
+//Test::ChainOfResponsibilitiesDemoTest();
+//Test::mediatorTest();
+//Test::flyweightTest();
+Test::flyweightDemoTest();

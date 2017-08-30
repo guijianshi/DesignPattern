@@ -360,4 +360,43 @@ class Test
         $xiao->requestApplications($reuqest2);
     }
 
+    public static function mediatorTest()
+    {
+        $mediator = new \Action\Mediator\ConcreteMediator();
+        $colleague1 = new \Action\Mediator\ConcreateColleague1($mediator);
+        $colleague2 = new \Action\Mediator\ConcreateColleague2($mediator);
+        $mediator->setColleague1($colleague1);
+        $mediator->setColleague2($colleague2);
+        $colleague1->send('天气怎么样?');
+        $colleague2->send('天气还不错呀,晚上吃什么?');
+    }
+
+    public static function flyweightTest()
+    {
+        $extrinsicstate = 20;
+        $flyweightFactory = new \Create\Flyweight\FlyweightFactory();
+        $flyweightX = $flyweightFactory->getFlyweight('X');
+        $flyweightX->operation(--$extrinsicstate);
+
+        $flyweightY = $flyweightFactory->getFlyweight('Y');
+        $flyweightY->operation(--$extrinsicstate);
+        $unshareFlyweight = new \Create\Flyweight\UnsharedConcreteFlyweight();
+        $unshareFlyweight->operation(--$extrinsicstate);
+    }
+
+    public static function flyweightDemoTest()
+    {
+        $webFactory = new \Create\Flyweight\Demo\WebSiteFactory();
+
+        $webA = $webFactory->getWebSiteCategory('产品展示');
+        $webA->user(new \Create\Flyweight\Demo\User('肖'));
+
+        $webB = $webFactory->getWebSiteCategory('留言板');
+        $webB->user(new \Create\Flyweight\Demo\User('章'));
+
+        $webC = $webFactory->getWebSiteCategory('个人博客');
+        $webC->user(new \Create\Flyweight\Demo\User('段'));
+
+        printf('网站分类总数为%d', $webFactory->getWebSiteCount());
+    }
 }
