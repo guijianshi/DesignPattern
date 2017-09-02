@@ -399,4 +399,80 @@ class Test
 
         printf('网站分类总数为%d', $webFactory->getWebSiteCount());
     }
+
+    public static function interpreterTest()
+    {
+        $context = new \Action\Interpreter\Context();
+        $list = [];
+        array_push($list, new \Action\Interpreter\TerminalExpression());
+        array_push($list, new \Action\Interpreter\NonterminalExpression());
+        array_push($list, new \Action\Interpreter\TerminalExpression());
+        array_push($list, new \Action\Interpreter\NonterminalExpression());
+
+        foreach ($list as $exp)
+        {
+            $exp->interpret($context);
+        }
+    }
+
+    public static function interpretDemoTest()
+    {
+        $context = new \Action\Interpreter\Demo\PlayContext();
+        echo '上海滩' . '<br/>';
+        $context->setText('T 1000 O 2 E 0.5 G 0.5 A 3 T 600 E 0.5 G 0.5 D 3 E 0.5 G 0.5 ');
+        try
+        {
+            while ($context->getText()) {
+                $str = $context->getText()[0];
+                switch ($str) {
+                    case "O":
+                        $exp = new \Action\Interpreter\Demo\ScaleExpression();
+                        break;
+                    case 'T':
+                        $exp = new \Action\Interpreter\Demo\SpeedExpression();
+                        break;
+                    case 'C':
+                    case 'D':
+                    case 'E':
+                    case 'F':
+                    case 'G':
+                    case 'A':
+                    case 'B':
+                    case 'P':
+                        $exp = new \Action\Interpreter\Demo\NoteExpression();
+                        break;
+                    default:
+                        throw new Exception('表达式不存在');
+                }
+                $exp->interpret($context);
+            }
+        } catch (\Exception $e) {
+            echo $e->getMessage() . '<br/>';
+        }
+    }
+
+    public static function visitorTest()
+    {
+        $object = new \Structure\Visitor\ObjectStructure();
+        $object->attch(new \Structure\Visitor\ConcreteElementA());
+        $object->attch(new \Structure\Visitor\ConcreteElementB());
+        $v1 = new \Structure\Visitor\ConcreteVisitor1();
+        $v2 = new \Structure\Visitor\ConcreteVisitor2();
+
+        $object->accept($v1);
+        $object->accept($v2);
+    }
+
+    public static function visitorDemoTest()
+    {
+        $o = new \Structure\Visitor\Demo\ObjectStructure();
+        $o->attach(new \Structure\Visitor\Demo\Man());
+        $o->attach(new \Structure\Visitor\Demo\Woman());
+        $actionA = new \Structure\Visitor\Demo\Success();
+
+        $o->display($actionA);
+
+        $actionB = new \Structure\Visitor\Demo\Marriage();
+        $o->display($actionB);
+    }
 }

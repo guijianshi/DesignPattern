@@ -20,7 +20,7 @@ class ConcreteCompany extends Company
 
     public function remove(Company $company)
     {
-        $this->childrens = \Helper::array_remove($this->childrens, $company);
+        $this->childrens = detach($this->childrens, $company);
     }
 
     public function display(int $depth)

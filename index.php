@@ -8,6 +8,7 @@
 
 define('DIR', __DIR__);
 include_once DIR . '/Loader.php';
+include_once DIR . '/helps.php';
 spl_autoload_register('\\Loader\\Loader::autoload');
 
 //Test::SingleFactoryTest();
@@ -32,4 +33,8 @@ spl_autoload_register('\\Loader\\Loader::autoload');
 //Test::ChainOfResponsibilitiesDemoTest();
 //Test::mediatorTest();
 //Test::flyweightTest();
-Test::flyweightDemoTest();
+//Test::flyweightDemoTest();
+//Test::interpreterTest();
+//Test::interpretDemoTest();
+//Test::visitorTest();
+Test::visitorDemoTest();
